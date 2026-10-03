@@ -1,6 +1,6 @@
 import { calculateMatchWinner } from '../utils/helpers';
 import { differenceInMinutes, parse, isValid } from 'date-fns';
-import { Clock, Trophy, Eye, EyeOff } from 'lucide-react';
+import { Clock, Trophy, Eye, EyeOff, RotateCcw } from 'lucide-react';
 
 export default function Matches({ matches, players, onUpdateMatch }) {
   
@@ -54,6 +54,19 @@ export default function Matches({ matches, players, onUpdateMatch }) {
     handleTimeChange(matchId, field, timeString, currentMatch);
   };
 
+  const handleResetMatch = (match) => {
+    if (!window.confirm(`Bạn có chắc chắn muốn làm mới Trận ${match.match_id}? Toàn bộ điểm và thời gian sẽ bị xoá.`)) return;
+    onUpdateMatch(match.id, {
+      score_a: 0,
+      score_b: 0,
+      start_time: null,
+      end_time: null,
+      duration_minutes: null,
+      winner: null,
+      hidden: false
+    });
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between mb-4">
@@ -77,13 +90,22 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                 <span className="flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5 text-teal-600" /> Trận {match.match_id}</span>
                 <div className="flex items-center gap-2">
                   <span className="bg-teal-200/50 text-teal-800 px-2 py-0.5 rounded-full">Vòng {match.round_number}</span>
-                  <button 
-                    onClick={() => onUpdateMatch(match.id, 'hidden', !match.hidden)}
-                    className="text-teal-400 hover:text-teal-600 transition-colors"
-                    title={match.hidden ? "Hiện trận đấu" : "Ẩn trận đấu"}
-                  >
-                    {match.hidden ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
+                  <div className="flex items-center ml-1 border-l border-teal-200/50 pl-2 gap-1.5">
+                    <button 
+                      onClick={() => handleResetMatch(match)}
+                      className="text-teal-400 hover:text-rose-500 transition-colors"
+                      title="Làm mới toàn bộ trận đấu"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                    </button>
+                    <button 
+                      onClick={() => onUpdateMatch(match.id, 'hidden', !match.hidden)}
+                      className="text-teal-400 hover:text-teal-600 transition-colors"
+                      title={match.hidden ? "Hiện trận đấu" : "Ẩn trận đấu"}
+                    >
+                      {match.hidden ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
                 </div>
               </div>
 

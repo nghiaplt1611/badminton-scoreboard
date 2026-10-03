@@ -37,12 +37,16 @@ function App() {
     };
   }, []);
 
-  const handleUpdateMatch = async (matchId, field, value) => {
+  const handleUpdateMatch = async (matchId, fieldOrData, value) => {
     try {
       const matchRef = doc(db, 'Matches', matchId);
-      await updateDoc(matchRef, {
-        [field]: value
-      });
+      if (typeof fieldOrData === 'object' && fieldOrData !== null) {
+        await updateDoc(matchRef, fieldOrData);
+      } else {
+        await updateDoc(matchRef, {
+          [fieldOrData]: value
+        });
+      }
     } catch (error) {
       console.error("Error updating match:", error);
       alert("Lỗi khi cập nhật. Vui lòng kiểm tra quyền Firestore.");

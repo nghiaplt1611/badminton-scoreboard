@@ -2,17 +2,19 @@ import { Activity } from 'lucide-react';
 
 const RacketIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    {/* Racket */}
-    <path d="M19 5A5 6 0 0 0 11.93 12.07L6 18l-2 4 4-2 6-5.93A5 6 0 0 0 19 5z" />
-    <path d="M12.5 11.5l3-3" />
-    <path d="M14.5 13.5l3-3" />
-    <path d="M14 6.5l3 3" />
-    <path d="M16 4.5l3 3" />
-    {/* Shuttlecock */}
-    <path d="M4 4l3 3" />
-    <path d="M7 4l-3 3" />
-    <circle cx="5.5" cy="5.5" r="1.5" />
-    <path d="M4.5 7l-1 2 4 1-1-2" />
+    {/* Racket Head */}
+    <ellipse cx="16" cy="8" rx="5" ry="6" transform="rotate(45 16 8)" />
+    {/* Racket Shaft */}
+    <path d="M12.5 11.5l-4 4" />
+    {/* Racket Grip */}
+    <path d="M5.5 18.5l3-3" strokeWidth="2.5" />
+    <path d="M4 20l2-2" strokeWidth="4" />
+    {/* Racket Strings */}
+    <path d="M15 4.5l2 2M13.5 6l3 3M12 7.5l4 4M17.5 5.5l-2 2M19 7l-3 3M20.5 8.5l-4 4" strokeWidth="0.75" />
+    {/* Shuttlecock Feathers */}
+    <path d="M2 6l3 2 1-3 1 3 3-2-2 4H4z" />
+    {/* Shuttlecock Cork */}
+    <path d="M4 10a2 2 0 0 0 4 0" />
   </svg>
 );
 
