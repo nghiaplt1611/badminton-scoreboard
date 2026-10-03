@@ -1,13 +1,18 @@
 import { Activity } from 'lucide-react';
 
 const RacketIcon = ({ className }) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect x="7" y="2" width="10" height="13" rx="5" ry="5" />
-    <path d="M12 15v5" />
-    <path d="M10 20h4v2h-4z" />
-    <path d="M10 5h4" />
-    <path d="M9 8h6" />
-    <path d="M10 11h4" />
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    {/* Racket */}
+    <path d="M19 5A5 6 0 0 0 11.93 12.07L6 18l-2 4 4-2 6-5.93A5 6 0 0 0 19 5z" />
+    <path d="M12.5 11.5l3-3" />
+    <path d="M14.5 13.5l3-3" />
+    <path d="M14 6.5l3 3" />
+    <path d="M16 4.5l3 3" />
+    {/* Shuttlecock */}
+    <path d="M4 4l3 3" />
+    <path d="M7 4l-3 3" />
+    <circle cx="5.5" cy="5.5" r="1.5" />
+    <path d="M4.5 7l-1 2 4 1-1-2" />
   </svg>
 );
 

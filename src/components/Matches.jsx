@@ -1,6 +1,6 @@
 import { calculateMatchWinner } from '../utils/helpers';
 import { differenceInMinutes, parse, isValid } from 'date-fns';
-import { Clock, Trophy } from 'lucide-react';
+import { Clock, Trophy, Eye, EyeOff } from 'lucide-react';
 
 export default function Matches({ matches, players, onUpdateMatch }) {
   
@@ -45,13 +45,24 @@ export default function Matches({ matches, players, onUpdateMatch }) {
     }
   };
 
+  const handleSetTime = (matchId, field, currentMatch) => {
+    const now = new Date();
+    const utcHour = now.getUTCHours();
+    const utcMin = now.getUTCMinutes();
+    const gmt7Hour = (utcHour + 7) % 24;
+    const timeString = `${gmt7Hour.toString().padStart(2, '0')}:${utcMin.toString().padStart(2, '0')}`;
+    handleTimeChange(matchId, field, timeString, currentMatch);
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-          Lịch thi đấu (Mô phỏng Sân cầu lông)
-        </h2>
-        <p className="text-sm text-slate-500 font-medium">Chạm 21 điểm sẽ kết thúc</p>
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h2 className="text-2xl font-black text-slate-800 tracking-tight uppercase">
+            Sơ đồ thi đấu
+          </h2>
+          <p className="text-sm text-slate-500 font-medium mt-1">Chạm 21 điểm sẽ kết thúc</p>
+        </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -60,11 +71,20 @@ export default function Matches({ matches, players, onUpdateMatch }) {
           const namesB = getPlayerNames(match.team_b_players);
 
           return (
-            <div key={match.id} className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transition-transform hover:-translate-y-1 duration-300 flex flex-col">
+            <div key={match.id} className={`bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transition-all duration-300 flex flex-col ${match.hidden ? 'opacity-40 grayscale hover:opacity-70' : ''}`}>
               {/* Header: Trận & Vòng (Outside court) */}
               <div className="flex justify-between items-center px-4 py-2.5 bg-teal-50/50 border-b border-teal-100 text-teal-800 text-[11px] font-bold tracking-wider uppercase">
                 <span className="flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5 text-teal-600" /> Trận {match.match_id}</span>
-                <span className="bg-teal-200/50 text-teal-800 px-2 py-0.5 rounded-full">Vòng {match.round_number}</span>
+                <div className="flex items-center gap-2">
+                  <span className="bg-teal-200/50 text-teal-800 px-2 py-0.5 rounded-full">Vòng {match.round_number}</span>
+                  <button 
+                    onClick={() => onUpdateMatch(match.id, 'hidden', !match.hidden)}
+                    className="text-teal-400 hover:text-teal-600 transition-colors"
+                    title={match.hidden ? "Hiện trận đấu" : "Ẩn trận đấu"}
+                  >
+                    {match.hidden ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
 
               {/* Sân đấu (Court Area) */}
@@ -147,21 +167,33 @@ export default function Matches({ matches, players, onUpdateMatch }) {
 
               {/* Footer: Time & Status (Outside court) */}
               <div className="px-4 py-3 bg-teal-50/50 border-t border-teal-100 flex justify-between items-center mt-auto">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <Clock className="w-3.5 h-3.5 text-teal-500" />
-                  <input 
-                    type="time"
-                    className="text-[11px] font-medium rounded-md bg-white text-teal-800 border border-teal-200 py-1 px-1.5 shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 w-[68px] transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    value={match.start_time || ''}
-                    onChange={(e) => handleTimeChange(match.id, 'start_time', e.target.value, match)}
-                  />
+                  
+                  {!match.start_time ? (
+                    <button onClick={() => handleSetTime(match.id, 'start_time', match)} className="text-[10px] font-bold bg-teal-100 text-teal-700 px-2 py-1 rounded hover:bg-teal-200 transition">Bắt đầu</button>
+                  ) : (
+                    <input 
+                      type="time"
+                      className="text-[12px] font-bold rounded bg-transparent text-teal-800 border-none p-0 focus:ring-0 w-[72px] transition-colors cursor-pointer"
+                      value={match.start_time}
+                      onChange={(e) => handleTimeChange(match.id, 'start_time', e.target.value, match)}
+                    />
+                  )}
+                  
                   <span className="text-teal-400 text-xs">-</span>
-                  <input 
-                    type="time"
-                    className="text-[11px] font-medium rounded-md bg-white text-teal-800 border border-teal-200 py-1 px-1.5 shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 w-[68px] transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                    value={match.end_time || ''}
-                    onChange={(e) => handleTimeChange(match.id, 'end_time', e.target.value, match)}
-                  />
+                  
+                  {!match.end_time ? (
+                    <button onClick={() => handleSetTime(match.id, 'end_time', match)} className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-1 rounded hover:bg-orange-200 transition" disabled={!match.start_time}>Kết thúc</button>
+                  ) : (
+                    <input 
+                      type="time"
+                      className="text-[12px] font-bold rounded bg-transparent text-teal-800 border-none p-0 focus:ring-0 w-[72px] transition-colors cursor-pointer"
+                      value={match.end_time}
+                      onChange={(e) => handleTimeChange(match.id, 'end_time', e.target.value, match)}
+                    />
+                  )}
+
                   {match.duration_minutes != null && (
                     <span className="text-[10px] font-bold text-emerald-700 ml-1 bg-emerald-100 px-1.5 py-0.5 rounded-full border border-emerald-200">
                       {match.duration_minutes}p
