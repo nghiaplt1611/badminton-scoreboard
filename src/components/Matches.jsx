@@ -197,7 +197,7 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                   ) : (
                     <input 
                       type="time"
-                      className="text-[12px] font-bold rounded bg-transparent text-teal-800 border-none p-0 focus:ring-0 w-[72px] transition-colors cursor-pointer"
+                      className="text-[12px] font-bold rounded bg-transparent text-teal-800 border-none p-0 focus:ring-0 w-[90px] transition-colors cursor-pointer"
                       value={match.start_time}
                       onChange={(e) => handleTimeChange(match.id, 'start_time', e.target.value, match)}
                     />
@@ -210,7 +210,7 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                   ) : (
                     <input 
                       type="time"
-                      className="text-[12px] font-bold rounded bg-transparent text-teal-800 border-none p-0 focus:ring-0 w-[72px] transition-colors cursor-pointer"
+                      className="text-[12px] font-bold rounded bg-transparent text-teal-800 border-none p-0 focus:ring-0 w-[90px] transition-colors cursor-pointer"
                       value={match.end_time}
                       onChange={(e) => handleTimeChange(match.id, 'end_time', e.target.value, match)}
                     />
