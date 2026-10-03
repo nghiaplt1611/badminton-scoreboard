@@ -64,7 +64,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                         {m.name} 
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                       </div>
-                      <div className="text-sm text-slate-500 font-medium">{m.won} trận thắng / Đội {m.team}</div>
+                      <div className="text-sm text-slate-500 font-medium">{m.won} trận thắng / {m.totalWonPoints} điểm thắng / Đội {m.team}</div>
                     </div>
                   </div>
                 ))}
@@ -94,7 +94,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                         {f.name}
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                       </div>
-                      <div className="text-sm text-slate-500 font-medium">{f.won} trận thắng / Đội {f.team}</div>
+                      <div className="text-sm text-slate-500 font-medium">{f.won} trận thắng / {f.totalWonPoints} điểm thắng / Đội {f.team}</div>
                     </div>
                   </div>
                 ))}
@@ -120,12 +120,16 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                 <th className="px-6 py-4 font-semibold text-center">Giới tính</th>
                 <th className="px-6 py-4 font-semibold text-center">Đã đấu</th>
                 <th className="px-6 py-4 font-semibold text-center">Trận thắng</th>
+                <th className="px-6 py-4 font-semibold text-center">Điểm thắng</th>
                 <th className="px-6 py-4 font-semibold text-right">Tỷ lệ thắng</th>
                 <th className="px-4 py-4 font-semibold text-center"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {stats.sort((a, b) => b.winRate - a.winRate).map((player) => (
+              {stats.sort((a, b) => {
+                if (b.won !== a.won) return b.won - a.won;
+                return b.totalWonPoints - a.totalWonPoints;
+              }).map((player) => (
                 <tr key={player.id} className="hover:bg-slate-50/50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
@@ -152,6 +156,9 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                   </td>
                   <td className="px-6 py-4 text-center font-bold text-emerald-600">
                     {player.won}
+                  </td>
+                  <td className="px-6 py-4 text-center font-bold text-indigo-600">
+                    {player.totalWonPoints}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex flex-col items-end gap-1.5">

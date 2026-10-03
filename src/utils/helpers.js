@@ -16,6 +16,7 @@ export const computeStats = (players, matches) => {
   const stats = players.map(p => {
     let played = 0;
     let won = 0;
+    let totalWonPoints = 0;
 
     matches.forEach(match => {
       // Chỉ tính các trận đã kết thúc
@@ -28,6 +29,7 @@ export const computeStats = (players, matches) => {
         played++;
         if ((isTeamA && match.winner === 'A') || (isTeamB && match.winner === 'B')) {
           won++;
+          totalWonPoints += isTeamA ? (match.score_a || 0) : (match.score_b || 0);
         }
       }
     });
@@ -36,6 +38,7 @@ export const computeStats = (players, matches) => {
       ...p,
       played,
       won,
+      totalWonPoints,
       winRate: played > 0 ? (won / played) * 100 : 0
     };
   });
@@ -49,8 +52,18 @@ export const getMVPs = (stats) => {
 
   const getTopPlayers = (group) => {
     if (group.length === 0) return [];
-    const maxWon = Math.max(...group.map(p => p.won));
-    return group.filter(p => p.won === maxWon && maxWon > 0);
+    
+    const sorted = [...group].sort((a, b) => {
+      if (b.won !== a.won) return b.won - a.won;
+      return b.totalWonPoints - a.totalWonPoints;
+    });
+
+    if (sorted.length === 0 || sorted[0].won === 0) return [];
+    
+    const maxWon = sorted[0].won;
+    const maxPoints = sorted[0].totalWonPoints;
+
+    return sorted.filter(p => p.won === maxWon && p.totalWonPoints === maxPoints);
   };
 
   return {

@@ -1,13 +1,12 @@
 import { calculateMatchWinner } from '../utils/helpers';
 import { differenceInMinutes, parse, isValid } from 'date-fns';
+import { Clock } from 'lucide-react';
 
 export default function Matches({ matches, players, onUpdateMatch }) {
   
   const getPlayerNames = (playerIds) => {
-    if (!playerIds || !Array.isArray(playerIds)) return 'Chưa xếp';
-    return playerIds
-      .map(id => players.find(p => p.id === id)?.name || 'Unknown')
-      .join(' & ');
+    if (!playerIds || !Array.isArray(playerIds)) return [];
+    return playerIds.map(id => players.find(p => p.id === id)?.name || 'Unknown');
   };
 
   const handleScoreChange = (matchId, field, value, currentMatch) => {
@@ -48,118 +47,104 @@ export default function Matches({ matches, players, onUpdateMatch }) {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-200 bg-slate-50/50">
-          <h2 className="text-lg font-bold text-slate-800">Danh sách các trận đấu</h2>
-          <p className="text-sm text-slate-500 mt-1">Cập nhật kết quả trực tiếp. Chạm 21 điểm sẽ tự động phân định thắng thua.</p>
-        </div>
-        
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
-              <tr>
-                <th className="px-6 py-4 font-semibold">Trận / Vòng</th>
-                <th className="px-6 py-4 font-semibold w-1/4">Đội A</th>
-                <th className="px-6 py-4 font-semibold text-center w-1/6">Tỉ số</th>
-                <th className="px-6 py-4 font-semibold w-1/4 text-right">Đội B</th>
-                <th className="px-6 py-4 font-semibold text-center">Thời gian</th>
-                <th className="px-6 py-4 font-semibold text-center">Kết quả</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {matches.map((match) => (
-                <tr key={match.id} className="hover:bg-slate-50/80 transition-colors group">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="font-bold text-slate-800">Trận {match.match_id}</div>
-                    <div className="text-xs text-slate-500 font-medium mt-0.5">Vòng {match.round_number}</div>
-                  </td>
-                  
-                  <td className="px-6 py-4">
-                    <div className="font-medium text-slate-700 bg-blue-50/50 px-3 py-2 rounded-lg border border-blue-100/50 inline-block">
-                      {getPlayerNames(match.team_a_players)}
-                    </div>
-                  </td>
-                  
-                  <td className="px-6 py-4 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <input 
-                        type="number"
-                        min="0"
-                        className="w-14 text-center font-bold text-lg rounded-md border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-1.5"
-                        value={match.score_a ?? ''}
-                        onChange={(e) => handleScoreChange(match.id, 'score_a', e.target.value, match)}
-                      />
-                      <span className="text-slate-400 font-bold">-</span>
-                      <input 
-                        type="number"
-                        min="0"
-                        className="w-14 text-center font-bold text-lg rounded-md border-slate-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-1.5"
-                        value={match.score_b ?? ''}
-                        onChange={(e) => handleScoreChange(match.id, 'score_b', e.target.value, match)}
-                      />
-                    </div>
-                  </td>
-                  
-                  <td className="px-6 py-4 text-right">
-                    <div className="font-medium text-slate-700 bg-rose-50/50 px-3 py-2 rounded-lg border border-rose-100/50 inline-block">
-                      {getPlayerNames(match.team_b_players)}
-                    </div>
-                  </td>
-                  
-                  <td className="px-6 py-4">
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="flex items-center gap-1">
-                        <input 
-                          type="time"
-                          className="text-xs rounded border-slate-200 py-1 px-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                          value={match.start_time || ''}
-                          onChange={(e) => handleTimeChange(match.id, 'start_time', e.target.value, match)}
-                        />
-                        <span className="text-slate-400">-</span>
-                        <input 
-                          type="time"
-                          className="text-xs rounded border-slate-200 py-1 px-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                          value={match.end_time || ''}
-                          onChange={(e) => handleTimeChange(match.id, 'end_time', e.target.value, match)}
-                        />
-                      </div>
-                      {match.duration_minutes != null && (
-                        <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
-                          {match.duration_minutes} phút
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  
-                  <td className="px-6 py-4 text-center">
-                    {match.winner === 'A' && (
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200 shadow-sm">
-                        Đội A Thắng
-                      </span>
-                    )}
-                    {match.winner === 'B' && (
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800 border border-rose-200 shadow-sm">
-                        Đội B Thắng
-                      </span>
-                    )}
-                    {!match.winner && (
-                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
-                        Chưa xong
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-              {matches.length === 0 && (
-                <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center text-slate-500">
-                    Chưa có dữ liệu trận đấu. Vui lòng thêm dữ liệu vào Firestore.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+          Lịch thi đấu (Mô phỏng Sân cầu lông)
+        </h2>
+        <p className="text-sm text-slate-500 font-medium">Chạm 21 điểm sẽ kết thúc</p>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {matches.map((match) => {
+          const namesA = getPlayerNames(match.team_a_players);
+          const namesB = getPlayerNames(match.team_b_players);
+
+          return (
+            <div key={match.id} className="relative bg-[#1e885c] rounded-xl overflow-hidden shadow-lg border-4 border-white transition-transform hover:-translate-y-1 duration-300 group">
+              {/* Sân đấu (Court Lines) */}
+              <div className="absolute inset-2 border-[3px] border-white/50 pointer-events-none rounded-sm"></div>
+              <div className="absolute inset-y-2 left-6 right-6 border-x-2 border-white/30 pointer-events-none"></div>
+              
+              {/* Lưới (Net) */}
+              <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1.5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiPjwvcmVjdD4KPHBhdGggZD0iTTAgMEw0IDRaTTAgNEw0IDBaIiBzdHJva2U9InJnYmEoMCwwLDAsMC4zKSIgc3Ryb2tlLXdpZHRoPSIwLjUiPjwvcGF0aD4KPC9zdmc+')] pointer-events-none z-0 border-l border-r border-white/80 shadow-md"></div>
+              
+              {/* Header: Trận & Vòng */}
+              <div className="absolute top-0 left-0 right-0 flex justify-between px-4 py-1.5 bg-black/30 text-white text-[11px] font-bold pointer-events-none z-10 tracking-wider">
+                <span>TRẬN {match.match_id}</span>
+                <span>VÒNG {match.round_number}</span>
+              </div>
+
+              <div className="flex h-48 pt-8 pb-10">
+                {/* Team A Side */}
+                <div className="flex-1 flex flex-col items-center justify-center px-2 z-10">
+                  <div className="text-white font-bold text-center mb-3 drop-shadow-md flex flex-col gap-1">
+                    {namesA.map((name, i) => (
+                      <span key={i} className="bg-blue-900/60 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-blue-400/30">{name}</span>
+                    ))}
+                  </div>
+                  <input 
+                    type="number"
+                    min="0"
+                    className="w-16 h-16 text-center font-black text-3xl rounded-xl bg-white/95 text-blue-700 border-2 border-blue-500/20 focus:border-blue-500 focus:ring-blue-500 shadow-xl transition-all"
+                    value={match.score_a ?? ''}
+                    onChange={(e) => handleScoreChange(match.id, 'score_a', e.target.value, match)}
+                  />
+                </div>
+
+                {/* Team B Side */}
+                <div className="flex-1 flex flex-col items-center justify-center px-2 z-10">
+                  <div className="text-white font-bold text-center mb-3 drop-shadow-md flex flex-col gap-1">
+                    {namesB.map((name, i) => (
+                      <span key={i} className="bg-rose-900/60 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-rose-400/30">{name}</span>
+                    ))}
+                  </div>
+                  <input 
+                    type="number"
+                    min="0"
+                    className="w-16 h-16 text-center font-black text-3xl rounded-xl bg-white/95 text-rose-700 border-2 border-rose-500/20 focus:border-rose-500 focus:ring-rose-500 shadow-xl transition-all"
+                    value={match.score_b ?? ''}
+                    onChange={(e) => handleScoreChange(match.id, 'score_b', e.target.value, match)}
+                  />
+                </div>
+              </div>
+
+              {/* Footer: Time & Status */}
+              <div className="absolute bottom-0 left-0 right-0 bg-black/40 backdrop-blur-sm px-3 py-2 flex justify-between items-center z-10 border-t border-white/10">
+                <div className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-white/70" />
+                  <input 
+                    type="time"
+                    className="text-[11px] font-medium rounded-md bg-white/10 text-white border-none py-0.5 px-1.5 shadow-inner focus:ring-2 focus:ring-white focus:bg-white/20 w-[68px] transition-colors"
+                    value={match.start_time || ''}
+                    onChange={(e) => handleTimeChange(match.id, 'start_time', e.target.value, match)}
+                  />
+                  <span className="text-white/50 text-xs">-</span>
+                  <input 
+                    type="time"
+                    className="text-[11px] font-medium rounded-md bg-white/10 text-white border-none py-0.5 px-1.5 shadow-inner focus:ring-2 focus:ring-white focus:bg-white/20 w-[68px] transition-colors"
+                    value={match.end_time || ''}
+                    onChange={(e) => handleTimeChange(match.id, 'end_time', e.target.value, match)}
+                  />
+                  {match.duration_minutes != null && (
+                    <span className="text-[10px] font-bold text-emerald-300 ml-1 bg-emerald-900/40 px-1.5 py-0.5 rounded-full border border-emerald-400/30">
+                      {match.duration_minutes}p
+                    </span>
+                  )}
+                </div>
+                
+                <div>
+                  {match.winner === 'A' && <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500 text-white shadow-sm">Đội A Thắng</span>}
+                  {match.winner === 'B' && <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500 text-white shadow-sm">Đội B Thắng</span>}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        {matches.length === 0 && (
+          <div className="col-span-full py-12 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">
+            Chưa có dữ liệu trận đấu.
+          </div>
+        )}
       </div>
     </div>
   );
