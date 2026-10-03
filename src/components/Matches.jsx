@@ -63,20 +63,20 @@ export default function Matches({ matches, players, onUpdateMatch }) {
             <div key={match.id} className="relative bg-[#1e885c] rounded-xl overflow-hidden shadow-lg border-2 border-[#1e885c] transition-transform hover:-translate-y-1 duration-300 group">
               {/* Sân đấu (Court Lines) - Tỉ lệ chuẩn */}
               <div className="absolute inset-2 border-2 border-white pointer-events-none rounded-sm opacity-90">
-                {/* Đường biên dọc đánh đơn (Singles side lines) */}
-                <div className="absolute left-0 right-0 top-[12%] bottom-[12%] border-y-2 border-white pointer-events-none"></div>
+                {/* Đường biên dọc đánh đơn (Singles side lines) - Cách mép ngoài ~7.5% */}
+                <div className="absolute left-0 right-0 top-[7.5%] bottom-[7.5%] border-y-2 border-white pointer-events-none"></div>
                 
-                {/* Đường giao cầu dài đánh đôi (Doubles long service lines) */}
-                <div className="absolute top-0 bottom-0 left-[10%] border-l-2 border-white pointer-events-none"></div>
-                <div className="absolute top-0 bottom-0 right-[10%] border-r-2 border-white pointer-events-none"></div>
+                {/* Đường giao cầu dài đánh đôi (Doubles long service lines) - Cách mép sau ~5.7% */}
+                <div className="absolute top-0 bottom-0 left-[5.7%] border-l-2 border-white pointer-events-none"></div>
+                <div className="absolute top-0 bottom-0 right-[5.7%] border-r-2 border-white pointer-events-none"></div>
                 
-                {/* Đường giao cầu ngắn (Short service lines) */}
-                <div className="absolute top-0 bottom-0 left-[35%] border-l-2 border-white pointer-events-none"></div>
-                <div className="absolute top-0 bottom-0 right-[35%] border-r-2 border-white pointer-events-none"></div>
+                {/* Đường giao cầu ngắn (Short service lines) - Cách lưới ~14.8%, cách mép sau ~35.2% */}
+                <div className="absolute top-0 bottom-0 left-[35.2%] border-l-2 border-white pointer-events-none"></div>
+                <div className="absolute top-0 bottom-0 right-[35.2%] border-r-2 border-white pointer-events-none"></div>
                 
                 {/* Đường chia đôi sân trái/phải (Center lines) */}
-                <div className="absolute top-1/2 left-0 w-[35%] border-t-2 border-white pointer-events-none"></div>
-                <div className="absolute top-1/2 right-0 w-[35%] border-t-2 border-white pointer-events-none"></div>
+                <div className="absolute top-1/2 left-0 w-[35.2%] border-t-2 border-white pointer-events-none"></div>
+                <div className="absolute top-1/2 right-0 w-[35.2%] border-t-2 border-white pointer-events-none"></div>
                 
                 {/* Lưới (Net) */}
                 <div className="absolute top-[-4px] bottom-[-4px] left-1/2 -translate-x-1/2 w-1.5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOCkiPjwvcmVjdD4KPHBhdGggZD0iTTAgMEw0IDRaTTAgNEw0IDBaIiBzdHJva2U9InJnYmEoMCwwLDAsMC4zKSIgc3Ryb2tlLXdpZHRoPSIwLjUiPjwvcGF0aD4KPC9zdmc+')] pointer-events-none z-0 border-l border-r border-white/80 shadow-md"></div>
