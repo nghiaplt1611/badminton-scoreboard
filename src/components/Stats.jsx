@@ -10,12 +10,12 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
     <div className="space-y-8 animate-fade-in">
       {/* Team Scores */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="relative overflow-hidden bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg p-6 text-white group">
+        <div className="relative overflow-hidden bg-gradient-to-br from-teal-400 to-emerald-500 rounded-2xl shadow-lg p-6 text-white group">
           <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white/10 blur-2xl group-hover:bg-white/20 transition-all duration-500"></div>
-          <h3 className="text-blue-100 font-medium text-lg mb-1 relative z-10">Tổng điểm Đội A</h3>
+          <h3 className="text-teal-100 font-medium text-lg mb-1 relative z-10">Tổng điểm Đội A</h3>
           <div className="flex items-end gap-3 relative z-10">
             <span className="text-5xl font-extrabold tracking-tight">{totalScoreA}</span>
-            <span className="text-blue-200 font-medium mb-1.5">điểm</span>
+            <span className="text-teal-200 font-medium mb-1.5">điểm</span>
           </div>
           {totalScoreA > totalScoreB && (
             <div className="absolute bottom-6 right-6 z-10 animate-bounce">
@@ -26,12 +26,12 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
           )}
         </div>
         
-        <div className="relative overflow-hidden bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl shadow-lg p-6 text-white group">
+        <div className="relative overflow-hidden bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl shadow-lg p-6 text-white group">
           <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white/10 blur-2xl group-hover:bg-white/20 transition-all duration-500"></div>
-          <h3 className="text-rose-100 font-medium text-lg mb-1 relative z-10">Tổng điểm Đội B</h3>
+          <h3 className="text-orange-100 font-medium text-lg mb-1 relative z-10">Tổng điểm Đội B</h3>
           <div className="flex items-end gap-3 relative z-10">
             <span className="text-5xl font-extrabold tracking-tight">{totalScoreB}</span>
-            <span className="text-rose-200 font-medium mb-1.5">điểm</span>
+            <span className="text-orange-200 font-medium mb-1.5">điểm</span>
           </div>
           {totalScoreB > totalScoreA && (
             <div className="absolute bottom-6 right-6 z-10 animate-bounce">
@@ -56,7 +56,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
               <div className="space-y-3">
                 {mvpMales.map(m => (
                   <div key={m.id} className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center border border-indigo-200 shadow-sm">
+                    <div className="h-10 w-10 rounded-full bg-teal-100 text-teal-700 font-bold flex items-center justify-center border border-teal-200 shadow-sm">
                       {getAvatarFallback(m.name)}
                     </div>
                     <div>
@@ -86,7 +86,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
               <div className="space-y-3">
                 {mvpFemales.map(f => (
                   <div key={f.id} className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-pink-100 text-pink-700 font-bold flex items-center justify-center border border-pink-200 shadow-sm">
+                    <div className="h-10 w-10 rounded-full bg-orange-100 text-orange-700 font-bold flex items-center justify-center border border-orange-200 shadow-sm">
                       {getAvatarFallback(f.name)}
                     </div>
                     <div>
@@ -108,12 +108,12 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
 
       {/* Stats Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-200 bg-slate-50/50">
+        <div className="p-6 border-b border-slate-200 bg-teal-50/50">
           <h2 className="text-lg font-bold text-slate-800">Thống kê chi tiết</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
+            <thead className="text-xs text-slate-500 uppercase bg-teal-50/80 border-b border-slate-200">
               <tr>
                 <th className="px-6 py-4 font-semibold">Thành viên</th>
                 <th className="px-6 py-4 font-semibold text-center">Đội</th>
@@ -130,11 +130,11 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                 if (b.won !== a.won) return b.won - a.won;
                 return b.totalWonPoints - a.totalWonPoints;
               }).map((player) => (
-                <tr key={player.id} className="hover:bg-slate-50/50 transition-colors">
+                <tr key={player.id} className="hover:bg-teal-50/30 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
                       <div className={`h-8 w-8 rounded-full font-bold flex items-center justify-center text-xs shadow-sm ${
-                        player.team === 'A' ? 'bg-blue-100 text-blue-700 border border-blue-200' : 'bg-rose-100 text-rose-700 border border-rose-200'
+                        player.team === 'A' ? 'bg-teal-100 text-teal-700 border border-teal-200' : 'bg-orange-100 text-orange-700 border border-orange-200'
                       }`}>
                         {getAvatarFallback(player.name)}
                       </div>
@@ -143,7 +143,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                   </td>
                   <td className="px-6 py-4 text-center">
                     <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold shadow-sm ${
-                      player.team === 'A' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-rose-50 text-rose-700 border border-rose-200'
+                        player.team === 'A' ? 'bg-teal-50 text-teal-700 border border-teal-200' : 'bg-orange-50 text-orange-700 border border-orange-200'
                     }`}>
                       Đội {player.team}
                     </span>
@@ -157,7 +157,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                   <td className="px-6 py-4 text-center font-bold text-emerald-600">
                     {player.won}
                   </td>
-                  <td className="px-6 py-4 text-center font-bold text-indigo-600">
+                  <td className="px-6 py-4 text-center font-bold text-teal-600">
                     {player.totalWonPoints}
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -174,7 +174,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                   <td className="px-4 py-4 text-center">
                     <button 
                       onClick={() => setEditingPlayer(player)}
-                      className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                      className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded-md transition-colors"
                       title="Sửa thông tin"
                     >
                       <Edit2 className="w-4 h-4" />
@@ -255,7 +255,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                   });
                   setEditingPlayer(null);
                 }}
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2 shadow-sm"
+                className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2 shadow-sm"
               >
                 <Save className="w-4 h-4" /> Lưu thay đổi
               </button>

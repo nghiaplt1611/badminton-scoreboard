@@ -62,13 +62,13 @@ export default function Matches({ matches, players, onUpdateMatch }) {
           return (
             <div key={match.id} className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transition-transform hover:-translate-y-1 duration-300 flex flex-col">
               {/* Header: Trận & Vòng (Outside court) */}
-              <div className="flex justify-between items-center px-4 py-2.5 bg-slate-50 border-b border-slate-100 text-slate-600 text-[11px] font-bold tracking-wider uppercase">
-                <span className="flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5 text-indigo-500" /> Trận {match.match_id}</span>
-                <span className="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">Vòng {match.round_number}</span>
+              <div className="flex justify-between items-center px-4 py-2.5 bg-teal-50/50 border-b border-teal-100 text-teal-800 text-[11px] font-bold tracking-wider uppercase">
+                <span className="flex items-center gap-1.5"><Trophy className="w-3.5 h-3.5 text-teal-600" /> Trận {match.match_id}</span>
+                <span className="bg-teal-200/50 text-teal-800 px-2 py-0.5 rounded-full">Vòng {match.round_number}</span>
               </div>
 
               {/* Sân đấu (Court Area) */}
-              <div className="relative bg-[#1e885c] h-48 flex-shrink-0">
+              <div className="relative bg-[#10b981] h-48 flex-shrink-0">
                 {/* Sân đấu (Court Lines) - Tỉ lệ chuẩn */}
                 <div className="absolute inset-2 border-2 border-white pointer-events-none rounded-sm opacity-90">
                   {/* Đường biên dọc đánh đơn (Singles side lines) - Cách mép ngoài ~7.5% */}
@@ -95,24 +95,24 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                   <div className="flex-1 flex flex-col items-center justify-center px-2">
                     <div className="text-white font-bold text-center mb-3 drop-shadow-md flex flex-col gap-1">
                       {namesA.map((name, i) => (
-                        <span key={i} className="bg-blue-900/70 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-blue-400/30">{name}</span>
+                        <span key={i} className="bg-teal-900/70 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-teal-400/30">{name}</span>
                       ))}
                     </div>
                     <div className="flex items-center gap-1.5 flex-nowrap z-10">
                       <button 
                         onClick={() => handleScoreChange(match.id, 'score_a', Math.max(0, (match.score_a || 0) - 1), match)}
-                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-blue-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-teal-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
                       >-</button>
                       <input 
                         type="number"
                         min="0"
-                        className="w-14 h-14 sm:w-16 sm:h-16 text-center font-black text-2xl sm:text-3xl rounded-xl bg-white/95 text-blue-700 border-2 border-blue-500/20 focus:border-blue-500 focus:ring-blue-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 text-center font-black text-2xl sm:text-3xl rounded-xl bg-white/95 text-teal-700 border-2 border-teal-500/20 focus:border-teal-500 focus:ring-teal-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
                         value={match.score_a ?? ''}
                         onChange={(e) => handleScoreChange(match.id, 'score_a', e.target.value, match)}
                       />
                       <button 
                         onClick={() => handleScoreChange(match.id, 'score_a', (match.score_a || 0) + 1, match)}
-                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-blue-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-teal-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
                       >+</button>
                     </div>
                   </div>
@@ -121,24 +121,24 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                   <div className="flex-1 flex flex-col items-center justify-center px-2">
                     <div className="text-white font-bold text-center mb-3 drop-shadow-md flex flex-col gap-1">
                       {namesB.map((name, i) => (
-                        <span key={i} className="bg-rose-900/70 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-rose-400/30">{name}</span>
+                        <span key={i} className="bg-orange-900/70 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-orange-400/30">{name}</span>
                       ))}
                     </div>
                     <div className="flex items-center gap-1.5 flex-nowrap z-10">
                       <button 
                         onClick={() => handleScoreChange(match.id, 'score_b', Math.max(0, (match.score_b || 0) - 1), match)}
-                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-rose-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-orange-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
                       >-</button>
                       <input 
                         type="number"
                         min="0"
-                        className="w-14 h-14 sm:w-16 sm:h-16 text-center font-black text-2xl sm:text-3xl rounded-xl bg-white/95 text-rose-700 border-2 border-rose-500/20 focus:border-rose-500 focus:ring-rose-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 text-center font-black text-2xl sm:text-3xl rounded-xl bg-white/95 text-orange-700 border-2 border-orange-500/20 focus:border-orange-500 focus:ring-orange-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
                         value={match.score_b ?? ''}
                         onChange={(e) => handleScoreChange(match.id, 'score_b', e.target.value, match)}
                       />
                       <button 
                         onClick={() => handleScoreChange(match.id, 'score_b', (match.score_b || 0) + 1, match)}
-                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-rose-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-orange-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
                       >+</button>
                     </div>
                   </div>
@@ -146,19 +146,19 @@ export default function Matches({ matches, players, onUpdateMatch }) {
               </div>
 
               {/* Footer: Time & Status (Outside court) */}
-              <div className="px-4 py-3 bg-slate-50 border-t border-slate-100 flex justify-between items-center mt-auto">
+              <div className="px-4 py-3 bg-teal-50/50 border-t border-teal-100 flex justify-between items-center mt-auto">
                 <div className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-slate-400" />
+                  <Clock className="w-3.5 h-3.5 text-teal-500" />
                   <input 
                     type="time"
-                    className="text-[11px] font-medium rounded-md bg-white text-slate-700 border border-slate-200 py-1 px-1.5 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-[68px] transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="text-[11px] font-medium rounded-md bg-white text-teal-800 border border-teal-200 py-1 px-1.5 shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 w-[68px] transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     value={match.start_time || ''}
                     onChange={(e) => handleTimeChange(match.id, 'start_time', e.target.value, match)}
                   />
-                  <span className="text-slate-400 text-xs">-</span>
+                  <span className="text-teal-400 text-xs">-</span>
                   <input 
                     type="time"
-                    className="text-[11px] font-medium rounded-md bg-white text-slate-700 border border-slate-200 py-1 px-1.5 shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-[68px] transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="text-[11px] font-medium rounded-md bg-white text-teal-800 border border-teal-200 py-1 px-1.5 shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 w-[68px] transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     value={match.end_time || ''}
                     onChange={(e) => handleTimeChange(match.id, 'end_time', e.target.value, match)}
                   />
@@ -170,8 +170,8 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                 </div>
                 
                 <div>
-                  {match.winner === 'A' && <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-100 text-blue-700 border border-blue-200 shadow-sm">Đội A Thắng</span>}
-                  {match.winner === 'B' && <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-rose-100 text-rose-700 border border-rose-200 shadow-sm">Đội B Thắng</span>}
+                  {match.winner === 'A' && <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-100 text-teal-700 border border-teal-200 shadow-sm">Đội A Thắng</span>}
+                  {match.winner === 'B' && <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-100 text-orange-700 border border-orange-200 shadow-sm">Đội B Thắng</span>}
                 </div>
               </div>
             </div>

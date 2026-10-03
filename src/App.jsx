@@ -60,14 +60,14 @@ function App() {
   };
 
   if (loading) {
-    return <div className="flex h-screen items-center justify-center bg-slate-50 text-slate-500 font-medium">Đang tải dữ liệu...</div>;
+    return <div className="flex h-screen items-center justify-center bg-teal-50 text-teal-600 font-medium">Đang tải dữ liệu...</div>;
   }
 
   const { stats, totalScoreA, totalScoreB } = computeStats(players, matches);
   const { mvpMales, mvpFemales } = getMVPs(stats);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
+    <div className="min-h-screen bg-teal-50/50 font-sans">
       <Header />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -76,8 +76,8 @@ function App() {
             onClick={() => setActiveTab('matches')}
             className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
               activeTab === 'matches' 
-                ? 'bg-white text-indigo-600 shadow-sm ring-1 ring-slate-900/5' 
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                ? 'bg-white text-teal-600 shadow-sm ring-1 ring-teal-900/5' 
+                : 'text-slate-600 hover:text-teal-700 hover:bg-white/50'
             }`}
           >
             <CalendarDays className="w-5 h-5" />
@@ -87,8 +87,8 @@ function App() {
             onClick={() => setActiveTab('stats')}
             className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
               activeTab === 'stats' 
-                ? 'bg-white text-indigo-600 shadow-sm ring-1 ring-slate-900/5' 
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                ? 'bg-white text-teal-600 shadow-sm ring-1 ring-teal-900/5' 
+                : 'text-slate-600 hover:text-teal-700 hover:bg-white/50'
             }`}
           >
             <Trophy className="w-5 h-5" />
