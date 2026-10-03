@@ -78,7 +78,7 @@ export default function Matches({ matches, players, onUpdateMatch }) {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {matches.map((match) => {
           const namesA = getPlayerNames(match.team_a_players);
           const namesB = getPlayerNames(match.team_b_players);
@@ -188,9 +188,9 @@ export default function Matches({ matches, players, onUpdateMatch }) {
               </div>
 
               {/* Footer: Time & Status (Outside court) */}
-              <div className="px-4 py-3 bg-teal-50/50 border-t border-teal-100 flex justify-between items-center mt-auto">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3.5 h-3.5 text-teal-500" />
+              <div className="px-3 sm:px-4 py-3 bg-teal-50/50 border-t border-teal-100 flex flex-wrap justify-between items-center gap-y-3 gap-x-2 mt-auto">
+                <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto justify-center sm:justify-start">
+                  <Clock className="w-3.5 h-3.5 text-teal-500 flex-shrink-0" />
                   
                   {!match.start_time ? (
                     <button onClick={() => handleSetTime(match.id, 'start_time', match)} className="text-[10px] font-bold bg-teal-100 text-teal-700 px-2 py-1 rounded hover:bg-teal-200 transition">Bắt đầu</button>
@@ -217,13 +217,13 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                   )}
 
                   {match.duration_minutes != null && (
-                    <span className="text-[10px] font-bold text-emerald-700 ml-1 bg-emerald-100 px-1.5 py-0.5 rounded-full border border-emerald-200">
+                    <span className="text-[10px] font-bold text-emerald-700 ml-1 bg-emerald-100 px-1.5 py-0.5 rounded-full border border-emerald-200 flex-shrink-0">
                       {match.duration_minutes}p
                     </span>
                   )}
                 </div>
                 
-                <div>
+                <div className="w-full sm:w-auto flex justify-center sm:justify-end">
                   {match.winner === 'A' && <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-teal-100 text-teal-700 border border-teal-200 shadow-sm">Đội A Thắng</span>}
                   {match.winner === 'B' && <span className="px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-100 text-orange-700 border border-orange-200 shadow-sm">Đội B Thắng</span>}
                 </div>

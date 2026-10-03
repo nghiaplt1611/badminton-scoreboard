@@ -44,7 +44,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
       </div>
 
       {/* MVPs */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* MVP Nam */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex items-start gap-5">
           <div className="p-3 bg-amber-100 text-amber-600 rounded-2xl">
@@ -214,7 +214,7 @@ export default function Stats({ stats, totalScoreA, totalScoreB, mvpMales, mvpFe
                   onChange={(e) => setEditingPlayer({...editingPlayer, name: e.target.value})}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Đội</label>
                   <select 

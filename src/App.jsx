@@ -125,10 +125,10 @@ function App() {
       <Header />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-center mb-8 gap-4 w-full relative">
-          <div className="hidden sm:block flex-1"></div>
+        <div className="flex flex-col md:flex-row items-center mb-8 gap-4 w-full relative">
+          <div className="hidden md:block flex-1"></div>
           
-          <div className="flex space-x-1 bg-slate-200/50 p-1 rounded-xl w-full sm:w-[450px] flex-shrink-0 shadow-inner z-10">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-1 bg-slate-200/50 p-1 rounded-xl w-full md:w-[450px] flex-shrink-0 shadow-inner z-10">
             <button
               onClick={() => setActiveTab('matches')}
               className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
@@ -153,10 +153,10 @@ function App() {
             </button>
           </div>
           
-          <div className="flex-1 flex sm:justify-end w-full">
+          <div className="flex-1 flex justify-center md:justify-end w-full">
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 w-full sm:w-auto justify-center"
+              className="flex items-center justify-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 w-full md:w-auto"
             >
               <Download className="w-5 h-5" /> Xuất Báo Cáo
             </button>
