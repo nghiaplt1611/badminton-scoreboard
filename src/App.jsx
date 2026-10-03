@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Matches from './components/Matches';
 import Stats from './components/Stats';
 import { computeStats, getMVPs } from './utils/helpers';
-import { Trophy, CalendarDays } from 'lucide-react';
+import { Trophy, CalendarDays, Download } from 'lucide-react';
 
 function App() {
   const [activeTab, setActiveTab] = useState('matches');
@@ -70,33 +70,91 @@ function App() {
   const { stats, totalScoreA, totalScoreB } = computeStats(players, matches);
   const { mvpMales, mvpFemales } = getMVPs(stats);
 
+  const handleExport = async () => {
+    try {
+      const XLSX = await import('xlsx');
+      
+      const matchData = matches.map(m => {
+        const teamA = m.team_a_players?.map(id => players.find(p => p.id === id)?.name).join(', ') || '';
+        const teamB = m.team_b_players?.map(id => players.find(p => p.id === id)?.name).join(', ') || '';
+        
+        return {
+          'Vòng': m.round_number,
+          'Trận': m.match_id,
+          'Đội A': teamA,
+          'Đội B': teamB,
+          'Điểm A': m.score_a || 0,
+          'Điểm B': m.score_b || 0,
+          'Đội Thắng': m.winner === 'A' ? 'Đội A' : (m.winner === 'B' ? 'Đội B' : ''),
+          'Bắt đầu': m.start_time || '',
+          'Kết thúc': m.end_time || '',
+          'Thời lượng (phút)': m.duration_minutes || ''
+        };
+      });
+
+      const statsData = stats.sort((a, b) => {
+        if (b.won !== a.won) return b.won - a.won;
+        return b.totalWonPoints - a.totalWonPoints;
+      }).map(s => ({
+        'Thành viên': s.name,
+        'Đội': s.team,
+        'Giới tính': s.gender,
+        'Số trận đã đấu': s.played,
+        'Số trận thắng': s.won,
+        'Tổng điểm thắng': s.totalWonPoints,
+        'Tỷ lệ thắng (%)': parseFloat(s.winRate.toFixed(2))
+      }));
+
+      const wb = XLSX.utils.book_new();
+      
+      const wsMatches = XLSX.utils.json_to_sheet(matchData);
+      XLSX.utils.book_append_sheet(wb, wsMatches, 'Chi tiết trận đấu');
+      
+      const wsStats = XLSX.utils.json_to_sheet(statsData);
+      XLSX.utils.book_append_sheet(wb, wsStats, 'Thống kê thành viên');
+
+      XLSX.writeFile(wb, 'Badminton_Tournament_Report.xlsx');
+    } catch (error) {
+      console.error("Export error:", error);
+      alert("Có lỗi xảy ra khi xuất file.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-teal-50/50 font-sans">
       <Header />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex space-x-1 bg-slate-200/50 p-1 rounded-xl mb-8 w-full max-w-md mx-auto shadow-inner">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4 max-w-4xl mx-auto">
+          <div className="flex space-x-1 bg-slate-200/50 p-1 rounded-xl w-full sm:max-w-md shadow-inner">
+            <button
+              onClick={() => setActiveTab('matches')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
+                activeTab === 'matches' 
+                  ? 'bg-white text-teal-600 shadow-sm ring-1 ring-teal-900/5' 
+                  : 'text-slate-600 hover:text-teal-700 hover:bg-white/50'
+              }`}
+            >
+              <CalendarDays className="w-5 h-5" />
+              <span>Lịch thi đấu</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('stats')}
+              className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
+                activeTab === 'stats' 
+                  ? 'bg-white text-teal-600 shadow-sm ring-1 ring-teal-900/5' 
+                  : 'text-slate-600 hover:text-teal-700 hover:bg-white/50'
+              }`}
+            >
+              <Trophy className="w-5 h-5" />
+              <span>Thống kê & MVP</span>
+            </button>
+          </div>
           <button
-            onClick={() => setActiveTab('matches')}
-            className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
-              activeTab === 'matches' 
-                ? 'bg-white text-teal-600 shadow-sm ring-1 ring-teal-900/5' 
-                : 'text-slate-600 hover:text-teal-700 hover:bg-white/50'
-            }`}
+            onClick={handleExport}
+            className="flex items-center gap-2 px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95 w-full sm:w-auto justify-center"
           >
-            <CalendarDays className="w-5 h-5" />
-            <span>Lịch thi đấu</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('stats')}
-            className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 rounded-lg font-medium transition-all duration-200 ${
-              activeTab === 'stats' 
-                ? 'bg-white text-teal-600 shadow-sm ring-1 ring-teal-900/5' 
-                : 'text-slate-600 hover:text-teal-700 hover:bg-white/50'
-            }`}
-          >
-            <Trophy className="w-5 h-5" />
-            <span>Thống kê & MVP</span>
+            <Download className="w-5 h-5" /> Xuất Báo Cáo
           </button>
         </div>
 
