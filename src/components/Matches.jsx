@@ -98,13 +98,23 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                         <span key={i} className="bg-blue-900/70 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-blue-400/30">{name}</span>
                       ))}
                     </div>
-                    <input 
-                      type="number"
-                      min="0"
-                      className="w-16 h-16 text-center font-black text-3xl rounded-xl bg-white/95 text-blue-700 border-2 border-blue-500/20 focus:border-blue-500 focus:ring-blue-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
-                      value={match.score_a ?? ''}
-                      onChange={(e) => handleScoreChange(match.id, 'score_a', e.target.value, match)}
-                    />
+                    <div className="flex items-center gap-1.5 flex-nowrap z-10">
+                      <button 
+                        onClick={() => handleScoreChange(match.id, 'score_a', Math.max(0, (match.score_a || 0) - 1), match)}
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-blue-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                      >-</button>
+                      <input 
+                        type="number"
+                        min="0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 text-center font-black text-2xl sm:text-3xl rounded-xl bg-white/95 text-blue-700 border-2 border-blue-500/20 focus:border-blue-500 focus:ring-blue-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
+                        value={match.score_a ?? ''}
+                        onChange={(e) => handleScoreChange(match.id, 'score_a', e.target.value, match)}
+                      />
+                      <button 
+                        onClick={() => handleScoreChange(match.id, 'score_a', (match.score_a || 0) + 1, match)}
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-blue-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                      >+</button>
+                    </div>
                   </div>
 
                   {/* Team B Side */}
@@ -114,13 +124,23 @@ export default function Matches({ matches, players, onUpdateMatch }) {
                         <span key={i} className="bg-rose-900/70 px-2.5 py-0.5 rounded-full text-sm backdrop-blur-sm border border-rose-400/30">{name}</span>
                       ))}
                     </div>
-                    <input 
-                      type="number"
-                      min="0"
-                      className="w-16 h-16 text-center font-black text-3xl rounded-xl bg-white/95 text-rose-700 border-2 border-rose-500/20 focus:border-rose-500 focus:ring-rose-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
-                      value={match.score_b ?? ''}
-                      onChange={(e) => handleScoreChange(match.id, 'score_b', e.target.value, match)}
-                    />
+                    <div className="flex items-center gap-1.5 flex-nowrap z-10">
+                      <button 
+                        onClick={() => handleScoreChange(match.id, 'score_b', Math.max(0, (match.score_b || 0) - 1), match)}
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-rose-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                      >-</button>
+                      <input 
+                        type="number"
+                        min="0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 text-center font-black text-2xl sm:text-3xl rounded-xl bg-white/95 text-rose-700 border-2 border-rose-500/20 focus:border-rose-500 focus:ring-rose-500 shadow-xl transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none m-0"
+                        value={match.score_b ?? ''}
+                        onChange={(e) => handleScoreChange(match.id, 'score_b', e.target.value, match)}
+                      />
+                      <button 
+                        onClick={() => handleScoreChange(match.id, 'score_b', (match.score_b || 0) + 1, match)}
+                        className="w-7 h-10 flex items-center justify-center bg-white/80 rounded-lg text-rose-700 font-bold hover:bg-white shadow-md active:scale-95 transition-all text-xl"
+                      >+</button>
+                    </div>
                   </div>
                 </div>
               </div>

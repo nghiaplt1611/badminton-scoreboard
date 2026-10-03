@@ -21,7 +21,7 @@ export default function Header() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-slate-900 leading-tight">Badminton Tournament</h1>
-              <p className="text-xs text-slate-500 font-medium">Giải Đấu Chuyên Nghiệp 2024</p>
+              <p className="text-xs text-slate-500 font-medium">Risk & Payment Advice - Strategy Team 2026</p>
             </div>
           </div>
         </div>
